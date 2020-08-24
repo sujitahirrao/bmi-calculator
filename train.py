@@ -1,4 +1,3 @@
-
 import cv2
 import numpy as np
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
@@ -6,14 +5,11 @@ from train_generator import train_generator, plot_imgs_from_generator
 from mae_callback import MAECallback
 import config
 
-
-
-batches_per_epoch=train_generator.n //train_generator.batch_size
+batches_per_epoch = train_generator.n // train_generator.batch_size
 
 
 def train_top_layer(model):
-
-    print 'Training top layer...'
+    print('Training top layer...')
 
     for l in model.layers[:-1]:
         l.trainable = False
@@ -58,8 +54,7 @@ def train_top_layer(model):
 
 
 def train_all_layers(model):
-
-    print 'Training all layers...'
+    print('Training all layers...')
 
     for l in model.layers:
         l.trainable = True
@@ -103,7 +98,6 @@ def train_all_layers(model):
 
 
 def test_model(model):
-
     with open(config.CROPPED_IMGS_INFO_FILE, 'r') as f:
         test_images_info = f.read().splitlines()[-config.VALIDATION_SIZE:]
 
@@ -122,4 +116,4 @@ def test_model(model):
     test_y = np.array(test_y)
 
     mae = get_mae(test_y, model.predict(test_X))
-    print '\nMAE:', mae
+    print('\nMAE:', mae)

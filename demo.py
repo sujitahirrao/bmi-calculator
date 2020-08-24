@@ -1,14 +1,11 @@
-
 import cv2
 import sys
 import dlib
 import numpy as np
 from contextlib import contextmanager
-import urllib2
+# import urllib2
 from model import get_model
 import config
-
-
 
 
 def get_trained_model():
@@ -51,7 +48,7 @@ def run_demo():
     multiple_targets = '--multiple' in args
     single_or_multiple = 'multiple faces' if multiple_targets else 'single face'
     model = get_trained_model()
-    print 'Loading model to detect BMI of %s...' % single_or_multiple
+    print('Loading model to detect BMI of %s...' % single_or_multiple)
 
     NUMBER_OF_FRAMES_IN_AVG = 20
     last_seen_bmis = []
@@ -72,7 +69,8 @@ def run_demo():
                 xw2 = min(int(x2 + config.MARGIN * w), img_w - 1)
                 yw2 = min(int(y2 + config.MARGIN * h), img_h - 1)
                 cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                faces[i, :, :, :] = cv2.resize(img[yw1:yw2 + 1, xw1:xw2 + 1, :], (config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH)) / 255.00
+                faces[i, :, :, :] = cv2.resize(img[yw1:yw2 + 1, xw1:xw2 + 1, :], (
+                config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH)) / 255.00
 
             predictions = model.predict(faces)
 

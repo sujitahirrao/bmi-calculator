@@ -1,4 +1,3 @@
-
 from keras.preprocessing.image import ImageDataGenerator
 import pandas as pd
 import Augmentor
@@ -11,13 +10,13 @@ import config
 
 
 def plot_imgs_from_generator(generator, number_imgs_to_show=9):
-    print ('Plotting images...')
+    print('Plotting images...')
     n_rows_cols = int(math.ceil(math.sqrt(number_imgs_to_show)))
     plot_index = 1
     x_batch, _ = next(generator)
     while plot_index <= number_imgs_to_show:
         plt.subplot(n_rows_cols, n_rows_cols, plot_index)
-        plt.imshow(x_batch[plot_index-1])
+        plt.imshow(x_batch[plot_index - 1])
         plot_index += 1
     plt.show()
 
@@ -40,8 +39,9 @@ def augment_image(np_img):
     image = [np.array(i).astype('float64') for i in image]
     return image[0]
 
+
 image_processor = ImageDataGenerator(
-    rescale=1./255,
+    rescale=1. / 255,
     preprocessing_function=augment_image
 )
 
@@ -51,14 +51,14 @@ with open(config.CROPPED_IMGS_INFO_FILE) as f:
         pass
     training_n = i - config.VALIDATION_SIZE
 
-train_df=pd.read_csv(config.CROPPED_IMGS_INFO_FILE, nrows=training_n)
+train_df = pd.read_csv(config.CROPPED_IMGS_INFO_FILE, nrows=training_n)
 
-train_generator=image_processor.flow_from_dataframe(
+train_generator = image_processor.flow_from_dataframe(
     dataframe=train_df,
     directory=config.CROPPED_IMGS_DIR,
     x_col='name',
     y_col='bmi',
     class_mode='other',
     color_mode='rgb',
-    target_size=(config.RESNET50_DEFAULT_IMG_WIDTH,config.RESNET50_DEFAULT_IMG_WIDTH),
+    target_size=(config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH),
     batch_size=config.TRAIN_BATCH_SIZE)

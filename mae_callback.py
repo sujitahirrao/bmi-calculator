@@ -1,4 +1,3 @@
-
 from keras.callbacks import Callback
 import numpy as np
 import config
@@ -18,10 +17,8 @@ def get_mae(actual, predicted):
 
 class MAECallback(Callback):
 
-
     def on_train_begin(self, logs={}):
         self._data = []
-
 
     def on_epoch_end(self, batch, logs={}):
         with open(config.CROPPED_IMGS_INFO_FILE, 'r') as f:
@@ -36,10 +33,10 @@ class MAECallback(Callback):
             print
             print
             print
-            print file_path
+            print(file_path)
             img = cv2.imread(file_path)
-            img = cv2.resize(img, (config.RESNET50_DEFAULT_IMG_WIDTH,config.RESNET50_DEFAULT_IMG_WIDTH))
-            test_x.append(img/255.00)
+            img = cv2.resize(img, (config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH))
+            test_x.append(img / 255.00)
         X_val = np.array(test_x)
         y_val = np.array(test_y)
         y_predict = np.asarray(self.model.predict(X_val))
@@ -49,7 +46,6 @@ class MAECallback(Callback):
             'val_mae': val_mae,
         })
         return
-
 
     def get_data(self):
         return self._data
