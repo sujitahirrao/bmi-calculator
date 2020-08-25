@@ -9,7 +9,7 @@ import config
 
 
 def get_trained_model():
-    weights_file = 'bmi_model_weights.h5'
+    weights_file = r'models\bmi_model_weights.h5'
     model = get_model(ignore_age_weights=True)
     model.load_weights(weights_file)
     return model

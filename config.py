@@ -10,3 +10,5 @@ CROPPED_IMGS_DIR = 'normalized_images'
 CROPPED_IMGS_INFO_FILE = 'normalized_data.csv'
 TOP_LAYER_LOG_DIR = 'logs/top_layer'
 ALL_LAYERS_LOG_DIR = 'logs/all_layers'
+
+DATA_FOLDER = 'data'
