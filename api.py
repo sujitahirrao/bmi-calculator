@@ -10,6 +10,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask("BMI Calculator")
 app.config["UPLOAD_FOLDER"] = config.DATA_FOLDER
+router = '/bmi-calculator/' + config.ENV
 
 
 def allowed_file(file_name):
@@ -17,12 +18,12 @@ def allowed_file(file_name):
            file_name.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/bmi-calculator/hello', methods=['GET'])
+@app.route(router + '/hello', methods=['GET'])
 def hello():
     return "Hello from BMI Calculator!"
 
 
-@app.route('/bmi-calculator/calculate-bmi-from-face-image',
+@app.route(router + '/calculate-bmi-from-face-image',
            methods=['GET', 'POST'])
 def calculate_from_face_image():
     try:
