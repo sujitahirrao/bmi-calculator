@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 from src import config
-from src.predict_from_face_image.model import get_model
+from src.predict_bmi_from_face_image.model import get_model
 
 
 def get_trained_model():

@@ -8,7 +8,7 @@ import dlib
 import numpy as np
 from contextlib import contextmanager
 # import urllib2
-from src.predict_from_face_image.model import get_model
+from src.predict_bmi_from_face_image.model import get_model
 from src import config
 
 
