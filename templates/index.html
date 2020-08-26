@@ -12,7 +12,14 @@
         <br>
         <br>
         <label>Image File</label>
-        <input type = "file" name = "image_file" />
+        <input type="file" accept="image/*" name="image_file" id="file" onchange="loadFile(event)">
+        <p><img id="output" width="200" /></p>
+        <script>
+        var loadFile = function(event) {
+            var image_file = document.getElementById('output');
+            image_file.src = URL.createObjectURL(event.target.files[0]);
+        };
+        </script>
         <br>
         <br>
         <input type = "submit"/>
