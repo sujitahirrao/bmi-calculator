@@ -3,7 +3,7 @@ import cv2
 import dlib
 from matplotlib import pyplot as plt
 import numpy as np
-import config
+from src import config
 
 detector = dlib.get_frontal_face_detector()
 

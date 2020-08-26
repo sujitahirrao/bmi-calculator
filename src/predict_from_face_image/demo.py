@@ -1,15 +1,19 @@
-import cv2
+import os
 import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
+import cv2
 import dlib
 import numpy as np
 from contextlib import contextmanager
 # import urllib2
-from model import get_model
-import config
+from src.predict_from_face_image.model import get_model
+from src import config
 
 
 def get_trained_model():
-    weights_file = r'models/bmi_model_weights.h5'
+    weights_file = config.MODEL_WEIGHTS_PATH
     model = get_model(ignore_age_weights=True)
     model.load_weights(weights_file)
     return model

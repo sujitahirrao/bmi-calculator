@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
-from train_generator import train_generator
-from mae_callback import MAECallback
-import config
+from src.predict_from_face_image.train_generator import train_generator
+from src.predict_from_face_image.mae_callback import MAECallback
+from src import config
 
 batches_per_epoch = train_generator.n // train_generator.batch_size
 

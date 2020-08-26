@@ -1,6 +1,6 @@
 from keras.callbacks import Callback
 import numpy as np
-import config
+from src import config
 import cv2
 
 

@@ -3,12 +3,12 @@ import dlib
 import numpy as np
 import tensorflow as tf
 
-import config
-from model import get_model
+from src import config
+from src.predict_from_face_image.model import get_model
 
 
 def get_trained_model():
-    weights_file = r'models/bmi_model_weights.h5'
+    weights_file = config.MODEL_WEIGHTS_PATH
     _model = get_model(ignore_age_weights=True)
     _model.load_weights(weights_file)
     return _model

@@ -3,8 +3,8 @@ from datetime import datetime
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
-import predict_bmi
-import config
+from src.predict_from_face_image import predict_bmi
+from src import config
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 

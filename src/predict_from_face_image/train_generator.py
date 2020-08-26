@@ -6,7 +6,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-import config
+from src import config
 
 
 def plot_imgs_from_generator(generator, number_imgs_to_show=9):

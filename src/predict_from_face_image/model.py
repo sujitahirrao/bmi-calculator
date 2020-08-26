@@ -1,7 +1,7 @@
 from tensorflow.python.keras.models import Model
 from tensorflow.python.keras.applications import ResNet50
 from tensorflow.python.keras.layers import Dense
-import config
+from src import config
 
 
 def get_age_model():
