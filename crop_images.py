@@ -51,7 +51,7 @@ def crop_faces(plot_images=False, max_images_to_plot=5):
             f.write('%s\n' % l)
 
     print('Cropped %d images and saved in %s - info in %s' % (
-    len(original_images_detected), config.CROPPED_IMGS_DIR, config.CROPPED_IMGS_INFO_FILE))
+        len(original_images_detected), config.CROPPED_IMGS_DIR, config.CROPPED_IMGS_INFO_FILE))
     print('Error detecting face in %d images - info in Data/unnormalized.txt' % bad_crop_count)
 
     if plot_images:

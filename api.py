@@ -3,8 +3,8 @@ from datetime import datetime
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
+import predict_bmi
 import config
-from detect_and_calculate_bmi import detect_and_calculate
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -18,7 +18,7 @@ def allowed_file(file_name):
 
 
 @app.route('/bmi-calculator/hello', methods=['GET'])
-def home():
+def hello():
     return "Hello from BMI Calculator!"
 
 
@@ -30,7 +30,7 @@ def calculate_from_face_image():
             print()
             print("request.form:\t", request.form)
             print("request.files:\t", request.files)
-            request_id = request.form["request_id"]
+            request_id = request.form.get("request_id", 100)
             print("request_id:\t", request_id)
             if "image_file" not in request.files:
                 msg = "No file part: 'image_file' in POST request."
@@ -45,10 +45,11 @@ def calculate_from_face_image():
                 print("Uploaded file:\t", file.filename)
                 image_file_name = str(datetime.now()).replace(':', '') + \
                                   f'_{request_id}_' + secure_filename(file.filename)
-                image_file_path = os.path.join(app.config["UPLOAD_FOLDER"], image_file_name)
+                image_file_path = os.path.join(
+                    app.config["UPLOAD_FOLDER"], image_file_name)
                 file.save(image_file_path)
                 print(f"Image file is saved at {image_file_path}")
-                bmi = detect_and_calculate(image_file_path)
+                bmi = predict_bmi.predict(image_file_path)
                 print("BMI:\t", bmi)
                 return jsonify({"request_id": request_id, "bmi": float(bmi)})
         else:

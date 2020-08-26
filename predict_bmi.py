@@ -8,7 +8,7 @@ from model import get_model
 
 
 def get_trained_model():
-    weights_file = r'models\bmi_model_weights.h5'
+    weights_file = r'models/bmi_model_weights.h5'
     _model = get_model(ignore_age_weights=True)
     _model.load_weights(weights_file)
     return _model
@@ -21,7 +21,7 @@ detector = dlib.get_frontal_face_detector()
 graph = tf.get_default_graph()
 
 
-def detect_and_calculate(image_file_path):
+def predict(image_file_path):
     img = cv2.imread(image_file_path)
     img = cv2.resize(img, (640, 480))
     input_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
-from train_generator import train_generator, plot_imgs_from_generator
+from train_generator import train_generator
 from mae_callback import MAECallback
 import config
 

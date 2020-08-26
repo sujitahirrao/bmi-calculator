@@ -9,7 +9,7 @@ import config
 
 
 def get_trained_model():
-    weights_file = r'models\bmi_model_weights.h5'
+    weights_file = r'models/bmi_model_weights.h5'
     model = get_model(ignore_age_weights=True)
     model.load_weights(weights_file)
     return model
@@ -70,7 +70,7 @@ def run_demo():
                 yw2 = min(int(y2 + config.MARGIN * h), img_h - 1)
                 cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
                 faces[i, :, :, :] = cv2.resize(img[yw1:yw2 + 1, xw1:xw2 + 1, :], (
-                config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH)) / 255.00
+                    config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH)) / 255.00
 
             predictions = model.predict(faces)
 
