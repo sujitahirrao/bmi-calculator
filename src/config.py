@@ -1,6 +1,6 @@
 import os
 
-env = "dev"     # [dev/test/prod]
+env = "test"     # [dev/test/prod]
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 print("PROJECT_DIR:\t", PROJECT_DIR)
