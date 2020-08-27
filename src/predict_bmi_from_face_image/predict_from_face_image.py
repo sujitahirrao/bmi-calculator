@@ -28,8 +28,11 @@ def predict(image_file_path):
     img_h, img_w, _ = np.shape(input_img)
 
     detected = detector(input_img, 1)
-    faces = np.empty((len(detected), config.RESNET50_DEFAULT_IMG_WIDTH,
+    faces = np.empty((len(detected),
+                      config.RESNET50_DEFAULT_IMG_WIDTH,
                       config.RESNET50_DEFAULT_IMG_WIDTH, 3))
+
+    cropped_image = None
 
     for i, d in enumerate(detected):
         x1, y1, x2, y2, w, h = d.left(), d.top(), d.right() + 1, \
@@ -39,8 +42,7 @@ def predict(image_file_path):
         xw2 = min(int(x2 + config.MARGIN * w), img_w - 1)
         yw2 = min(int(y2 + config.MARGIN * h), img_h - 1)
         # cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
-        cv2.imwrite(''.join(image_file_path.split('.')[:-1]) + '-cropped.jpg',
-                    img[yw1:yw2, xw1:xw2])
+        cropped_image = img[yw1:yw2, xw1:xw2]
         faces[i, :, :, :] = cv2.resize(img[yw1:yw2 + 1, xw1:xw2 + 1, :], (
             config.RESNET50_DEFAULT_IMG_WIDTH,
             config.RESNET50_DEFAULT_IMG_WIDTH)) / 255.00
@@ -48,4 +50,11 @@ def predict(image_file_path):
     with graph.as_default():
         predictions = model.predict(faces)
 
-    return predictions[0][0]
+    cv2.putText(cropped_image, str(predictions[0][0]), (5, 30),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+    cv2.imwrite(''.join(image_file_path.split('.')[:-1]) + '-cropped.jpg',
+                cropped_image)
+
+    cropped_image = open(''.join(image_file_path.split('.')[:-1]) + '-cropped.jpg', 'rb')
+
+    return predictions[0][0], cropped_image

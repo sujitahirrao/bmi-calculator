@@ -7,11 +7,14 @@
 <body>
     <form action = "http://localhost:5000/bmi-calculator/dev/predict-bmi-from-face-image" method = "POST"
         enctype = "multipart/form-data">
+        <!--
         <label>Request ID</label>
         <input type = "text" id = "request_id" name = "request_id"/>
         <br>
         <br>
+        -->
         <label>Image File</label>
+        <br>
         <input type="file" accept="image/*" name="image_file" id="file" onchange="loadFile(event)">
         <p><img id="output" width="200" /></p>
         <script>
@@ -20,7 +23,6 @@
             image_file.src = URL.createObjectURL(event.target.files[0]);
         };
         </script>
-        <br>
         <br>
         <input type = "submit"/>
     </form>

@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from werkzeug.utils import secure_filename
 
 from src import config
@@ -58,9 +58,10 @@ def _predict_from_face_image():
             print("request_id:\t", request_id)
             image_file_path = save_file(request_id, request.files)
             if image_file_path:
-                bmi = predict_from_face_image.predict(image_file_path)
+                bmi, face_img = predict_from_face_image.predict(image_file_path)
                 print("BMI:\t", bmi)
-                return jsonify({"request_id": request_id, "bmi": float(bmi)})
+                # return f"BMI: {bmi}"
+                return send_file(face_img, mimetype='image/jpg')
             else:
                 return "Failed to save image file."
         else:
@@ -87,7 +88,7 @@ def _predict_from_med_doc():
             if image_file_path:
                 bmi = predict_from_med_doc.predict(image_file_path)
                 print("BMI:\t", bmi)
-                return jsonify({"request_id": request_id, "bmi": float(bmi)})
+                return f"BMI: {bmi}"
             else:
                 return "Failed to save image file."
         else:
@@ -101,4 +102,4 @@ def _predict_from_med_doc():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
