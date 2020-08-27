@@ -79,4 +79,4 @@ def predict(image_file_path):
     print("***")
     print()
 
-    return 0.00
+    return 21.8
