@@ -54,7 +54,7 @@ def run_demo():
     model = get_trained_model()
     print('Loading model to detect BMI of %s...' % single_or_multiple)
 
-    NUMBER_OF_FRAMES_IN_AVG = 20
+    NUMBER_OF_FRAMES_IN_AVG = 10
     last_seen_bmis = []
     detector = dlib.get_frontal_face_detector()
 

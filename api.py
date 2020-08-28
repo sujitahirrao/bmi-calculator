@@ -86,9 +86,11 @@ def _predict_from_med_doc():
             print("request_id:\t", request_id)
             image_file_path = save_file(request_id, request.files)
             if image_file_path:
-                bmi = predict_from_med_doc.predict(image_file_path)
+                bmi, w, h = predict_from_med_doc.predict(image_file_path)
                 print("BMI:\t", bmi)
-                return f"BMI: {bmi}"
+                print("Weight:\t", w)
+                print("Height:\t", h)
+                return f"<html> <p> BMI: {bmi} <br> Weight: {w} kg <br> Height: {h} m </p> </html>"
             else:
                 return "Failed to save image file."
         else:

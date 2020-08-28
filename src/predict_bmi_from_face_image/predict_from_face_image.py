@@ -51,7 +51,7 @@ def predict(image_file_path):
         predictions = model.predict(faces)
 
     cv2.putText(cropped_image, str(predictions[0][0]), (5, 30),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
     cv2.imwrite(''.join(image_file_path.split('.')[:-1]) + '-cropped.jpg',
                 cropped_image)
 

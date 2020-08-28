@@ -4,7 +4,13 @@ import pytesseract
 import numpy as np
 
 # to set relevant segmentation mode for pytesseract to recognize more text
-custom_oem_psm_config = r'--oem 3 --psm 6'
+CUSTOM_OEM_PSM_CONFIG = r'--oem 3 --psm 6'
+
+reg_ex_weight = r'weight'
+reg_ex_weight_number = r'\d+(\.\d{1,3})?'
+
+reg_ex_height = r'height'
+reg_ex_height_number = r'\d+(\.\d{1,3})?'
 
 
 def correct_rotation(image):
@@ -58,12 +64,18 @@ def run_pytesseract_ocr(image):
     # convert image from BGR to RGB to pass to pytesseract
     img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     text = pytesseract.image_to_string(img_rgb,
-                                       config=custom_oem_psm_config)
+                                       config=CUSTOM_OEM_PSM_CONFIG)
     return text
 
 
-def find_weight_and_height():
-    pass
+def find_weight_and_height(txt):
+    weight_search_res = re.search(reg_ex_weight, txt, re.IGNORECASE)
+    weight_res = re.search(reg_ex_weight_number, txt[weight_search_res.span()[1]:])
+
+    height_search_res = re.search(reg_ex_height, txt, re.IGNORECASE)
+    height_res = re.search(reg_ex_height_number, txt[height_search_res.span()[1]:])
+
+    return weight_res.group(), height_res.group()
 
 
 def predict(image_file_path):
@@ -72,6 +84,14 @@ def predict(image_file_path):
     img = process_image(img)
     text = run_pytesseract_ocr(img)
 
+    weight, height = find_weight_and_height(text)
+
+    try:
+        height_in_meters = float(height) / 100
+        bmi = float(weight) / (height_in_meters * height_in_meters)
+    except (TypeError, ValueError) as e:
+        raise e
+
     print()
     print("PyTesseract result")
     print("***")
@@ -79,4 +99,4 @@ def predict(image_file_path):
     print("***")
     print()
 
-    return 21.8
+    return round(bmi, 2), round(float(weight), 2), round(height_in_meters, 2)
