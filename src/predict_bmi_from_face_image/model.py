@@ -1,6 +1,7 @@
 from tensorflow.python.keras.models import Model
 from tensorflow.python.keras.applications import ResNet50
 from tensorflow.python.keras.layers import Dense
+
 from src import config
 
 
@@ -8,7 +9,8 @@ def get_age_model():
     age_model = ResNet50(
         include_top=False,
         weights='imagenet',
-        input_shape=(config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH, 3),
+        input_shape=(config.RESNET50_DEFAULT_IMG_WIDTH,
+                     config.RESNET50_DEFAULT_IMG_WIDTH, 3),
         pooling='avg'
     )
 

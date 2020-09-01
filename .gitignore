@@ -145,3 +145,5 @@ cython_debug/
 *.PNG
 *.h5
 .idea/
+*.ppt
+*.pptx

@@ -5,15 +5,48 @@
     <title>BAGIC BMI Calculator</title>
 </head>
 <body>
-    <form action = "http://localhost:5000/bmi-calculator/test/calculate-bmi-from-face-image" method = "POST"
+    <form action = "http://localhost:5000/bmi-calculator/test/predict-bmi-from-face-image" method = "POST"
         enctype = "multipart/form-data">
+        <!--
         <label>Request ID</label>
         <input type = "text" id = "request_id" name = "request_id"/>
         <br>
         <br>
-        <label>Image File</label>
-        <input type = "file" name = "image_file" />
+        -->
+        <label>Face Image File</label>
         <br>
+        <input type="file" accept="image/*" name="image_file" id="file1" onchange="loadFile1(event)">
+        <p><img id="output1" width="200" /></p>
+        <script>
+        var loadFile1 = function(event) {
+            var image_file = document.getElementById('output1');
+            image_file.src = URL.createObjectURL(event.target.files[0]);
+        };
+        </script>
+        <br>
+        <input type = "submit"/>
+    </form>
+    <br>
+
+    <br>
+    <form action = "http://localhost:5000/bmi-calculator/test/predict-bmi-from-med-doc" method = "POST"
+        enctype = "multipart/form-data">
+        <!--
+        <label>Request ID</label>
+        <input type = "text" id = "request_id" name = "request_id"/>
+        <br>
+        <br>
+        -->
+        <label>Medical Document Image File</label>
+        <br>
+        <input type="file" accept="image/*" name="image_file" id="file2" onchange="loadFile2(event)">
+        <p><img id="output2" width="200" /></p>
+        <script>
+        var loadFile2 = function(event) {
+            var image_file = document.getElementById('output2');
+            image_file.src = URL.createObjectURL(event.target.files[0]);
+        };
+        </script>
         <br>
         <input type = "submit"/>
     </form>
