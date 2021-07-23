@@ -6,7 +6,6 @@ backports.weakref==1.0.post1
 click==7.1.2
 cmake==3.18.2
 cycler==0.10.0
-dlib @ https://pypi.python.org/packages/da/06/bd3e241c4eb0a662914b3b4875fc52dd176a9db0d4a2c915ac2ad8800e9e/dlib-19.7.0-cp36-cp36m-win_amd64.whl
 enum34==1.1.6
 Flask==1.1.2
 funcsigs==1.0.2

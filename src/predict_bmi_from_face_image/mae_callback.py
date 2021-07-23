@@ -28,12 +28,8 @@ class MAECallback(Callback):
         for info in test_images_info:
             bmi = float(info.split(',')[1])
             test_y.append(bmi)
-            file_name = info.split(',')[4]
+            file_name = info.split(',')[0]
             file_path = '%s/%s' % (config.CROPPED_IMGS_DIR, file_name)
-            print
-            print
-            print
-            print(file_path)
             img = cv2.imread(file_path)
             img = cv2.resize(img, (config.RESNET50_DEFAULT_IMG_WIDTH, config.RESNET50_DEFAULT_IMG_WIDTH))
             test_x.append(img / 255.00)

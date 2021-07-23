@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
+
 from src.predict_bmi_from_face_image.train_generator import train_generator
 from src.predict_bmi_from_face_image.mae_callback import MAECallback
 from src import config

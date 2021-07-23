@@ -3,22 +3,28 @@ import cv2
 import dlib
 from matplotlib import pyplot as plt
 import numpy as np
-from src import config
+# from src import config
+
+ORIGINAL_IMGS_DIR = 'images'
+ORIGINAL_IMGS_INFO_FILE = 'data/data.csv'
+CROPPED_IMGS_DIR = 'normalized_images'
+CROPPED_IMGS_INFO_FILE = 'normalized_data.csv'
+MARGIN = .1
 
 detector = dlib.get_frontal_face_detector()
 
 
 def crop_faces(plot_images=False, max_images_to_plot=5):
     bad_crop_count = 0
-    if not os.path.exists(config.CROPPED_IMGS_DIR):
-        os.makedirs(config.CROPPED_IMGS_DIR)
-    print('Cropping faces and saving to %s' % config.CROPPED_IMGS_DIR)
+    if not os.path.exists(CROPPED_IMGS_DIR):
+        os.makedirs(CROPPED_IMGS_DIR)
+    print('Cropping faces and saving to %s' % CROPPED_IMGS_DIR)
     good_cropped_images = []
     good_cropped_img_file_names = []
     detected_cropped_images = []
     original_images_detected = []
-    for file_name in sorted(os.listdir(config.ORIGINAL_IMGS_DIR)):
-        np_img = cv2.imread(os.path.join(config.ORIGINAL_IMGS_DIR, file_name))
+    for file_name in sorted(os.listdir(ORIGINAL_IMGS_DIR)):
+        np_img = cv2.imread(os.path.join(ORIGINAL_IMGS_DIR, file_name))
         detected = detector(np_img, 1)
         img_h, img_w, _ = np.shape(np_img)
         original_images_detected.append(np_img)
@@ -29,29 +35,42 @@ def crop_faces(plot_images=False, max_images_to_plot=5):
 
         d = detected[0]
         x1, y1, x2, y2, w, h = d.left(), d.top(), d.right() + 1, d.bottom() + 1, d.width(), d.height()
-        xw1 = int(x1 - config.MARGIN * w)
-        yw1 = int(y1 - config.MARGIN * h)
-        xw2 = int(x2 + config.MARGIN * w)
-        yw2 = int(y2 + config.MARGIN * h)
+        xw1 = int(x1 - MARGIN * w)
+        yw1 = int(y1 - MARGIN * h)
+        xw2 = int(x2 + MARGIN * w)
+        yw2 = int(y2 + MARGIN * h)
         cropped_img = crop_image(np_img, xw1, yw1, xw2, yw2)
-        norm_file_path = '%s/%s' % (config.CROPPED_IMGS_DIR, file_name)
+        norm_file_path = '%s/%s' % (CROPPED_IMGS_DIR, file_name)
         cv2.imwrite(norm_file_path, cropped_img)
 
         good_cropped_img_file_names.append(file_name)
+        
+#     print("good_cropped_img_file_names")
+#     print(good_cropped_img_file_names)
+#     print()
 
     # save info of good cropped images
-    with open(config.ORIGINAL_IMGS_INFO_FILE, 'r') as f:
-        column_headers = f.read().splitlines()[0]
-        all_imgs_info = f.read().splitlines()[1:]
-    cropped_imgs_info = [l for l in all_imgs_info if l.split(',')[-1] in good_cropped_img_file_names]
-
-    with open(config.CROPPED_IMGS_INFO_FILE, 'w') as f:
+    with open(ORIGINAL_IMGS_INFO_FILE, 'r') as f:
+        lines =  f.read().splitlines()
+        column_headers = lines[0]
+#         print("column_headers")
+#         print(column_headers)
+        all_imgs_info = lines[1:]
+#         print()
+#         print("all_imgs_info")
+#         print(all_imgs_info)
+    cropped_imgs_info = [l for l in all_imgs_info if l.split(',')[0] in good_cropped_img_file_names]
+#     print()
+#     print("cropped_imgs_info")
+#     print(cropped_imgs_info)
+    
+    with open(CROPPED_IMGS_INFO_FILE, 'w') as f:
         f.write('%s\n' % column_headers)
         for l in cropped_imgs_info:
             f.write('%s\n' % l)
 
     print('Cropped %d images and saved in %s - info in %s' % (
-        len(original_images_detected), config.CROPPED_IMGS_DIR, config.CROPPED_IMGS_INFO_FILE))
+        len(original_images_detected), CROPPED_IMGS_DIR, CROPPED_IMGS_INFO_FILE))
     print('Error detecting face in %d images - info in Data/unnormalized.txt' % bad_crop_count)
 
     if plot_images:
